@@ -5,6 +5,7 @@ import 'izitoast/dist/css/iziToast.min.css';
 const apiKey = '46313967-d4d30fae59777882921d7e8bb'; // мой ключ
 const loader = document.querySelector('.loader');
 
+function getPictures(searchInput, renderFn) {
 axios
    .get('https://pixabay.com/api/', {
       params: {
@@ -51,7 +52,7 @@ axios
         position: 'topCenter',
       });
     });
-
+}
  
 export default getPictures;
 

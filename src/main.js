@@ -1,4 +1,3 @@
-//const searchInput = document.querySelector('input[name="search"]').value;
 
 import getPictures from './js/pixabay-api';
 import renderPictures from './js/render-functions';
