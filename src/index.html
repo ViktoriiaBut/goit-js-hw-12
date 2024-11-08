@@ -6,7 +6,7 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Homework 11</title>
-  <link rel="stylesheet" href="./css/gallery.css" />
+  <link rel="stylesheet" href="./css/styles.css" />
 </head>
 
 <body>
@@ -23,9 +23,28 @@
     <div class="loader">Loading images, please wait...</div>
   </div>
   <script type="module" src="./main.js"></script>
-  <script type="module" src="./js/pixabay-api.js"></script>
-  <script type="module" src="./js/render-functions.js"></script>
+ 
 </body>
 
 </html>
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gallery</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <form id="form">
+      <input name="searchquery" placeholder="Search images..." />
+      <button type="submit">Search</button>
+    </form>
+
+    <div class="loader"></div>
+
+    <ul class="gallery"></ul>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

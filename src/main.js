@@ -11,7 +11,7 @@ searchForm.addEventListener('submit', event => {
   event.preventDefault();
   gallery.innerHTML = '';  // Очистка галереи перед новым поиском
 
-  const searchValue = event.target.elements.searchquery.value;
+  const searchValue = e.target.elements.searchquery.value;
   if (searchValue.trim() === '')
      return getPictures(searchValue, renderPictures);
   
