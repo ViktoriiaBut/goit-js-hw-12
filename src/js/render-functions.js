@@ -1,42 +1,66 @@
-let formData = {
-    email: '',
-    message: '',
-  };
-  
-  const form = document.querySelector('.feedback-form');
-  
-  // От0слеживание изменений в форме и избережении даних в локальном хранилище
-  form.addEventListener('input', event => {
-    const { name, value } = event.target;
-    formData[name] = value;
-    localStorage.setItem('feedback-form-state', JSON.stringify(formData));
-  });
-  
-  // Загрузка данних с локального хранилищаs при загрузке странички
-  const storedData = localStorage.getItem('feedback-form-state');
-  console.log(storedData);
-  
-  if (storedData) {
-    const parsedData = JSON.parse(storedData);
-    console.log(parsedData);
-    formData = parsedData;
-    form.elements.email.value = parsedData.email;
-    form.elements.message.value = parsedData.message;
-  }
-  
-  // Оброботка отправки форми
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-  
-    // Валидация данних
-    if (!formData.email || !formData.message) {
-      alert('Fill please all fields');
-      return;
-    }
-  
-    // Очи0стка данних
-    localStorage.removeItem('feedback-form-state');
-    formData.email = '';
-    formData.message = '';
-    form.reset();
-  });
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+import { gallery } from '../main';
+
+//Lightbox
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+});
+
+
+function renderPictures(pics) {
+  const markup = pics
+    .map(
+      ({
+        webformatURL,
+        largeImageURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => {
+        //Макет
+        return `
+<li class='gallery__item'>
+       <a href='${largeImageURL}'>
+        <img src='${webformatURL}' alt='${tags}'>
+      </a>
+    <div class="info">
+      
+      <div class='info-item'> 
+       <p class='main-p'>Likes</p> 
+       <p>${likes}</p>
+      </div>
+      
+      <div class='info-item'> 
+       <p class='main-p'>Views</p>
+       <p>${views}</p>
+      </div>
+
+      <div class='info-item'>
+       <p class='main-p'>Comments</p>
+       <p>${comments}</p>
+      </div>
+
+      <div class='info-item'>
+       <p class='main-p'>Downloads</p>
+       <p>${downloads}</p>
+      </div>
+    </div>
+</li>
+    `;
+      }
+    )
+    .join('');
+
+  gallery.innerHTML = markup;
+
+  // Обновляем SimpleLightbox
+  lightbox.refresh();
+}
+
+
+
+
+  export default renderPictures;
