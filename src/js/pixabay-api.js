@@ -2,6 +2,11 @@ import axios from 'axios';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
+
+
+
 
 const apiKey = '46313967-d4d30fae59777882921d7e8bb'; // мой ключ
 const loader = document.querySelector('.loader');
@@ -60,4 +65,6 @@ axios
       });
     });
 
-    export default getPictures;
+ 
+export default getPictures;
+

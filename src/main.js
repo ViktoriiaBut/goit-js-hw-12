@@ -1,7 +1,5 @@
 //const searchInput = document.querySelector('input[name="search"]').value;
 
-
-
 import getPictures from './js/pixabay-api';
 import renderPictures from './js/render-functions';
 
@@ -14,6 +12,7 @@ searchForm.addEventListener('submit', event => {
   gallery.innerHTML = '';  // Очистка галереи перед новым поиском
 
   const searchValue = event.target.elements.searchquery.value;
-  if (searchValue.trim() === '') return;
-  getPictures(searchValue, renderPictures);
+  if (searchValue.trim() === '')
+     return getPictures(searchValue, renderPictures);
+  
 });
