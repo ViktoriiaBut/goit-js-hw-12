@@ -16,13 +16,18 @@ axios
         per_page: 9
       }
     })
-    
+  
+    fetch(url)
     .then(response => {
-      const hits = response.data.hits;
-      console.log(hits);
-
-      if (hits.length === 0) {
-        iziToast.show({
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+      return response.json();
+    })
+.then (data => {
+    const pictures = data.hits;
+    if (pictures.length === 0) {
+       iziToast.show({
           title: 'Error',
           message:
             'Sorry, there are no images matching your search query. Please try again!',
@@ -31,25 +36,13 @@ axios
         });
       } else {
         loader.style.display = 'block';
-        const totalImages = hits.length;
-        let loadedImages = 0; // Количество загруженных изображений
-
-        hits.forEach(hit => {
-          const galleryItem = document.createElement('li');
-          galleryItem.classList.add('gallery-item');
-          galleryItem.innerHTML = `
-            <a href="${hit.largeImageURL}">
-              <img src="${hit.webformatURL}" alt="${hit.tags}" class="gallery-image">
-            </a>
-          `;
-          gallery.appendChild(galleryItem);
-
-        });
-
-        lightbox.refresh(); // Обновляем SimpleLightbox
-      }
-    })
-    .catch(error => {
+        
+    }
+    
+    loader.style.display = 'none';
+    renderFn(pictures);
+  })
+     .catch(error => {
       console.error(error); // Выводим ошибку в консоль на пофиксить
       iziToast.show({
         title: 'Error',
