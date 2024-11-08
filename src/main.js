@@ -16,9 +16,17 @@ searchForm.addEventListener('submit', event => {
   gallery.innerHTML = ''; // Очистка галереи перед новым поиском
 
   axios
-    .get(
-      `https://pixabay.com/api/?key=${apiKey}&q=${searchInput}&image_type=photo&orientation=horizontal&safesearch=true&_limit=9`
-    )
+   .get('https://pixabay.com/api/', {
+      params: {
+        key: apiKey,
+        q: searchInput,
+        image_type: 'photo',
+        orientation: 'horizontal',
+        safesearch: true,
+        per_page: 9
+      }
+    })
+    
     .then(response => {
       const hits = response.data.hits;
       console.log(hits);
@@ -46,14 +54,6 @@ searchForm.addEventListener('submit', event => {
           `;
           gallery.appendChild(galleryItem);
 
-          // Обновление прогрес0са загрузки после загрузки каждого изображения
-          const image = galleryItem.querySelector('.gallery-image');
-          image.onload = () => {
-            loadedImages++;
-            if (loadedImages === totalImages) {
-              loader.style.display = 'none'; // Прячем загрузчик посля загрузки всех изображений
-            }
-          };
         });
 
         lightbox.refresh(); // Обновляем SimpleLightbox
