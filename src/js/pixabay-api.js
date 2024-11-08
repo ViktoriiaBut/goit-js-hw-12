@@ -1,41 +1,56 @@
-'use strict';
+const apiKey = '46313967-d4d30fae59777882921d7e8bb'; // мой ключ
+const loader = document.querySelector('.loader');
 
-// import SimpleLightbox from 'simplelightbox';
-// import 'simplelightbox/dist/simple-lightbox.min.css';
-// import { images } from './images-data.js';
+axios
+   .get('https://pixabay.com/api/', {
+      params: {
+        key: apiKey,
+        q: searchInput,
+        image_type: 'photo',
+        orientation: 'horizontal',
+        safesearch: true,
+        per_page: 9
+      }
+    })
+    
+    .then(response => {
+      const hits = response.data.hits;
+      console.log(hits);
 
-// const galleryElem = document.querySelector('.gallery');
-// galleryElem.style.listStyleType = 'none';
+      if (hits.length === 0) {
+        iziToast.show({
+          title: 'Error',
+          message:
+            'Sorry, there are no images matching your search query. Please try again!',
+          color: 'red',
+          position: 'topCenter',
+        });
+      } else {
+        loader.style.display = 'block';
+        const totalImages = hits.length;
+        let loadedImages = 0; // Количество загруженных изображений
 
-// // Деструктуризация
-// for (const img of images) {
-//   const { preview, original, description } = img;
+        hits.forEach(hit => {
+          const galleryItem = document.createElement('li');
+          galleryItem.classList.add('gallery-item');
+          galleryItem.innerHTML = `
+            <a href="${hit.largeImageURL}">
+              <img src="${hit.webformatURL}" alt="${hit.tags}" class="gallery-image">
+            </a>
+          `;
+          gallery.appendChild(galleryItem);
 
-//   // создание елемента <img>
-//   const imgEl = document.createElement('img');
-//   imgEl.classList = 'gallery-image';
-//   imgEl.width = '360';
-//   imgEl.src = preview;
-//   imgEl.alt = description;
+        });
 
-//   // создание елемента <a>
-//   const linkEl = document.createElement('a');
-//   linkEl.classList = 'gallery-link';
-//   linkEl.href = original;
-//   // linkEl.dataset.src = original;
-//   linkEl.title = description;
-
-//   // создание елемента <li>
-//   const itemEl = document.createElement('li');
-//   itemEl.classList = 'gallery-item';
-
-//   // вложение елементів (первый тот в который вкладываем, потом тот что вкладываем)
-//   linkEl.appendChild(imgEl);
-//   itemEl.appendChild(linkEl);
-//   galleryElem.appendChild(itemEl);
-// }
-// const lightbox = new SimpleLightbox('.gallery a', {
-//   captionDelay: 250,
-//   captionsData: 'alt',
-//   showCounter: false,
-// });
+        lightbox.refresh(); // Обновляем SimpleLightbox
+      }
+    })
+    .catch(error => {
+      console.error(error); // Выводим ошибку в консоль на пофиксить
+      iziToast.show({
+        title: 'Error',
+        message: 'Error - while loading images. Please open new images',
+        color: 'red',
+        position: 'topCenter',
+      });
+    });
