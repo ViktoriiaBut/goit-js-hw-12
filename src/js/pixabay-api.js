@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiKey = '46313967-d4d30fae59777882921d7e8bb'; // мой ключ
-const loader = document.querySelector('.loader');
+
 
 export const fetchImages = query => {
 axios
