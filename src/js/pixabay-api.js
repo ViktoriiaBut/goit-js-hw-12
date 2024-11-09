@@ -18,14 +18,13 @@ axios
       }
     })
   
-    fetch(url)
     .then(response => {
       if (!response.ok) {
         throw new Error(response.status);
       }
       return response.json();
     })
-.then (data => {
+   .then(data => {
     const pictures = data.hits;
     if (pictures.length === 0) {
        iziToast.show({
@@ -35,14 +34,11 @@ axios
           color: 'red',
           position: 'topCenter',
         });
-      } else {
-        loader.style.display = 'block';
-        
     }
+    loader.style.display = 'block';
     
-    loader.style.display = 'none';
     renderFn(pictures);
-  })
+})
      .catch(error => {
       console.error(error); // Выводим ошибку в консоль на пофиксить
       iziToast.show({
