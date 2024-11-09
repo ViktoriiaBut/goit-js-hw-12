@@ -13,28 +13,26 @@
 <body>
 
   <form class="search-form" autocomplete="off">
-src/index.html
+    <input class="search-input" type="text" name="searchtext" placeholder="Search images..." />
+    <button class="search-button" type="submit">Search</button>
   </form>
 
   <ul class="gallery"></ul>
 
-  <div class="loader"></div>
-
-    <div class="loader">Loading images, please wait...</div>
+  <div class="loader-wrapper">
+    <span class="loader">Loading images, please wait...</span>
   </div>
+  
   <script type="module" src="./main.js"></script>
  
 </body>
 
-<body>
-  <form class="search-form">
-    <input type="text" name="query" placeholder="Search images..." required />
-    <button type="submit">Search</button>
-  </form>
 
-  <div class="loader" style="display: none">Loading images, please wait...</div>
-
+  <div class="loader-wrapper">
+    <span class="loader js-loader"></span>
+  </div>
   <ul class="gallery"></ul>
+
 
   <script type="module" defer src="./main.js"></script>
 </body>

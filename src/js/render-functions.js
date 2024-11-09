@@ -1,15 +1,25 @@
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
+
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { gallery } from '../main';
 
-//Lightbox
-const lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'alt',
-});
+const lightbox = new SimpleLightbox('.gallery a');
 
+export const renderImages = images => {
+  const gallery = document.querySelector('.gallery');
+  gallery.innerHTML = '';
 
-function renderPictures(pics) {
-  const markup = pics
+  if (images.length === 0) {
+    iziToast.error({
+      title: 'Error',
+      message:
+        'Sorry, there are no images matching your search query. Please try again!',
+    });
+    return;
+  }
+
+  const markup = images
     .map(
       ({
         webformatURL,
@@ -19,46 +29,36 @@ function renderPictures(pics) {
         views,
         comments,
         downloads,
-      }) => {
-        //Макет
-        return `
-<li class='gallery__item'>
-       <a href='${largeImageURL}'>
-        <img src='${webformatURL}' alt='${tags}'>
-      </a>
-    <div class="info">
-      
-      <div class='info-item'> 
-       <p class='main-p'>Likes</p> 
-       <p>${likes}</p>
-      </div>
-      
-      <div class='info-item'> 
-       <p class='main-p'>Views</p>
-       <p>${views}</p>
-      </div>
-
-      <div class='info-item'>
-       <p class='main-p'>Comments</p>
-       <p>${comments}</p>
-      </div>
-
-      <div class='info-item'>
-       <p class='main-p'>Downloads</p>
-       <p>${downloads}</p>
-      </div>
-    </div>
-</li>
-    `;
-      }
+      }) => `
+            <li class="gallery-item">
+                <a href="${largeImageURL}" class="gallery-link">
+                    <img src="${webformatURL}" alt="${tags}" class="gallery-image" />
+                </a>
+                <div class="info">
+                    <p class="info-item"><span>Likes:</span> ${likes}</p>
+                    <p class="info-item"><span>Views:</span> ${views}</p>
+                    <p class="info-item"><span>Comments:</span> ${comments}</p>
+                    <p class="info-item"><span>Downloads:</span> ${downloads}</p>
+                </div>
+            </li>
+        `
     )
     .join('');
 
   gallery.innerHTML = markup;
-
-  // Обновляем SimpleLightbox
   lightbox.refresh();
-}
+};
 
+export const showLoader = () => {
+  const loader = document.querySelector('.loader');
+  if (loader) {
+    loader.style.display = 'block';
+  }
+};
 
-  export default renderPictures;
+export const hideLoader = () => {
+  const loader = document.querySelector('.loader');
+  if (loader) {
+    loader.style.display = 'none';
+  }
+};
