@@ -3,8 +3,6 @@ import renderPictures from './js/render-functions.js';
 
 const searchForm = document.querySelector('.search-form');
 export const gallery = document.querySelector('.gallery');
-// const form = document.getElementById('form');
-
 
 
 searchForm.addEventListener('submit', event => {
