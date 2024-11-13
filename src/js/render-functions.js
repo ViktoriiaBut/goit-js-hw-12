@@ -1,25 +1,13 @@
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
 
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import { gallery } from '../main';
 
 const lightbox = new SimpleLightbox('.gallery a');
 
-export const renderImages = images => {
-  const gallery = document.querySelector('.gallery');
-  gallery.innerHTML = '';
 
-  if (images.length === 0) {
-    iziToast.error({
-      title: 'Error',
-      message:
-        'Sorry, there are no images matching your search query. Please try again!',
-    });
-    return;
-  }
-
-  const markup = images
+ export function renderPictures(pics) {
+  const markup = pics
     .map(
       ({
         webformatURL,
@@ -29,8 +17,9 @@ export const renderImages = images => {
         views,
         comments,
         downloads,
-      }) => `
-            <li class="gallery-item">
+      }) => {
+              return `
+<li class="gallery-item">
                 <a href="${largeImageURL}" class="gallery-link">
                     <img src="${webformatURL}" alt="${tags}" class="gallery-image" />
                 </a>
@@ -42,12 +31,13 @@ export const renderImages = images => {
                 </div>
             </li>
         `
+      }
     )
     .join('');
 
   gallery.innerHTML = markup;
   lightbox.refresh();
-};
+}
 
 export const showLoader = () => {
   const loader = document.querySelector('.loader');
@@ -56,9 +46,4 @@ export const showLoader = () => {
   }
 };
 
-export const hideLoader = () => {
-  const loader = document.querySelector('.loader');
-  if (loader) {
-    loader.style.display = 'none';
-  }
-};
+export default renderPictures;
