@@ -1,11 +1,4 @@
 
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
-import { gallery } from '../main';
-
-const lightbox = new SimpleLightbox('.gallery a');
-
-
  export function renderPictures(pics) {
   const markup = pics
     .map(
@@ -39,11 +32,11 @@ const lightbox = new SimpleLightbox('.gallery a');
   lightbox.refresh();
 }
 
-export const showLoader = () => {
-  const loader = document.querySelector('.loader');
-  if (loader) {
-    loader.style.display = 'block';
-  }
-};
+// export const showLoader = () => {
+//   const loader = document.querySelector('.loader');
+//   if (loader) {
+//     loader.style.display = 'block';
+//   }
+// };
 
 export default renderPictures;
