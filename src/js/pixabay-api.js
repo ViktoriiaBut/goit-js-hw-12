@@ -13,7 +13,7 @@ export function getPictures(query) {
 
        const url = `https://pixabay.com/api/?${searchParams}`;
             
-        fetch(url)
+       return fetch(url)
         .then(response => {
           if (!response.ok) {
             throw new Error(response.status);
