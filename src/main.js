@@ -12,7 +12,7 @@ searchForm.addEventListener ('submit', event => {
     event.preventDefault();
     gallery.innerHTML = '';  // Очистка галереи перед новым поиском
     const searchValue = event.target.elements.query.value;
-
+    
 if (!searchValue) {
   iziToast.error({
     title: 'Error',
@@ -25,7 +25,7 @@ if (!searchValue) {
   getPictures(searchValue)
   .then(data => {
    console.log(data);
-  
+   
   if (data.hits.length === 0) {
     iziToast.warning({
       title: 'No results',
