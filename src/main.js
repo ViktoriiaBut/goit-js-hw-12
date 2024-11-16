@@ -7,21 +7,30 @@ const loader = document.querySelector('.loader');
 const searchForm = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
 
+function showLoader() {
+  loader.style.display = 'flex';
+}
+
+function hideLoader() {
+  loader.style.display = 'none';
+}
+
 
 searchForm.addEventListener ('submit', event => {
     event.preventDefault();
-    gallery.innerHTML = '';  // Очистка галереи перед новым поиском
     const searchValue = event.target.elements.query.value;
     
-if (!searchValue) {
+   if (!searchValue) {
   iziToast.error({
     title: 'Error',
     message: 'Please enter a search query!',
   }); 
-   return;
+     return;
   }
-   loader.style.display = 'block';
 
+  showLoader();
+  gallery.innerHTML = ''; // Очистка галереи перед новым поиском
+   
   getPictures(searchValue)
   .then(data => {
    console.log(data);
@@ -31,20 +40,20 @@ if (!searchValue) {
       title: 'No results',
       message: 'Sorry, there are no images matching your search query.'
     });
-     } else {
+         } else {
     renderPictures(data.hits); 
+    
   }
 })
-
     .catch (error => {
       iziToast.error({
         title: 'Error',
         message: 'Failed to fetch images. Please try again later.',
-      });
+              });       
     }) 
   
     .finally(() => {
-      loader.style.display = 'none'; 
+      hideLoader();  
       refreshSearchForm(); 
     })
      

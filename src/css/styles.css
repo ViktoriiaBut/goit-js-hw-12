@@ -49,7 +49,10 @@ body {
 }
 
 .loader {
+  display: none;
   text-align: center;
+  align-items: center;
+  justify-content: center;
   font-size: 18px;
   color: #555;
   margin: 20px 0;
