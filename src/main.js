@@ -43,7 +43,6 @@ async function handleSubmit(event) {
      return;
   }
 
-
   loadMore.style.display = "none";
   page = 1;
   totalHits = 0;

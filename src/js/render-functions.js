@@ -6,8 +6,6 @@ const lightbox = new SimpleLightbox('.gallery a');
 const gallery = document.querySelector('.gallery');
 
  export function renderPictures(pics) {
-  console.log(pics);
-  console.log(gallery);
   
   const markup = pics
     .map(
@@ -32,8 +30,7 @@ const gallery = document.querySelector('.gallery');
           })
        .join('');
   gallery.innerHTML = markup;
-  console.log(gallery.innerHTML);
-  
+    
   lightbox.refresh();
 }
 export default renderPictures;
