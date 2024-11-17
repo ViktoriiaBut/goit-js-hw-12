@@ -10,7 +10,7 @@ const loader = document.querySelector('.loader');
 const loadMore = document.querySelector(".load-more");
 const searchForm = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
-
+const inputText = document.querySelector(".search-form input");
 
 function showLoader() {
   loader.style.display = 'flex';
@@ -19,7 +19,7 @@ function showLoader() {
 function hideLoader() {
   loader.style.display = 'none';
 }
-
+let lightbox;
 let page = 1;
 let searchValue = '';
 let totalHits = 0;
@@ -32,7 +32,7 @@ loadMore.addEventListener("click", loadMoreImg);
 async function handleSubmit(event) {
     event.preventDefault();
     
-    const searchValue = event.target.elements.query.value.trim();
+    const searchValue = inputText.value.trim();
     gallery.innerHTML = ''; 
 
    if (!searchValue) {
@@ -44,20 +44,21 @@ async function handleSubmit(event) {
   }
 
   loadMore.style.display = "none";
+  query = searchValue;
   page = 1;
   totalHits = 0;
   loadedHits = 0;
   gallery.innerHTML = "";
 
   showLoader();
-  await loadData(searchValue, page);
+  await loadData(query, page);
   hideLoader();
   searchForm.reset();
 }
 
-async function loadData(searchValue, page) {
+async function loadData(query, page) {
   try {
-      const data = await getPictures(searchValue, page);
+      const data = await getPictures(query, page);
 
       if (data.hits.length === 0) {
           loadMore.style.display = "none";
@@ -67,6 +68,7 @@ async function loadData(searchValue, page) {
           });
           return;
       }
+
       totalHits = data.totalHits;
       loadedHits += data.hits.length;
 
@@ -86,11 +88,12 @@ async function loadData(searchValue, page) {
       });
   }
 }
+
 async function loadMoreImg() {
   page++;
   loadMore.disabled = true;
   showLoader();
-  await loadData(searchValue, page);
+  await loadData(query, page);
   hideLoader();
 }
 
@@ -117,6 +120,7 @@ function setupLightbox() {
       });
   }
 }
+
 function scrollPage() {
   const galleryItem = document.querySelector(".gallery-item");
   if (galleryItem) {
@@ -127,8 +131,6 @@ function scrollPage() {
       });
   }
 }
-
-
 
 
 
