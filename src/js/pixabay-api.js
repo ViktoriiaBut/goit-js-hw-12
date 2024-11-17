@@ -2,10 +2,10 @@ import axios from 'axios';
 
 const apiKey = '46313967-d4d30fae59777882921d7e8bb'; // мой ключ
 
-export async function getPictures(searchValue, currentPage) {
+export async function getPictures(query, currentPage) {
     const searchParams = new URLSearchParams({
         key: apiKey,
-        q: searchValue,
+        q: query,
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,

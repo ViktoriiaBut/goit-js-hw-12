@@ -5,12 +5,11 @@ import 'izitoast/dist/css/iziToast.min.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-const lightbox = new SimpleLightbox('.gallery a');
 const loader = document.querySelector('.loader');
 const loadMore = document.querySelector(".load-more");
 const searchForm = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
-const inputText = document.querySelector(".search-form input");
+// const inputText = document.querySelector(".search-form input");
 
 function showLoader() {
   loader.style.display = 'flex';
@@ -32,7 +31,7 @@ loadMore.addEventListener("click", loadMoreImg);
 async function handleSubmit(event) {
     event.preventDefault();
     
-    const searchValue = inputText.value.trim();
+    searchValue = event.target.elements.query.value.trim();
     gallery.innerHTML = ''; 
 
    if (!searchValue) {
@@ -44,21 +43,20 @@ async function handleSubmit(event) {
   }
 
   loadMore.style.display = "none";
-  query = searchValue;
   page = 1;
   totalHits = 0;
   loadedHits = 0;
   gallery.innerHTML = "";
 
   showLoader();
-  await loadData(query, page);
+  await loadData(searchValue, page);
   hideLoader();
   searchForm.reset();
 }
 
-async function loadData(query, page) {
+async function loadData(searchValue, page) {
   try {
-      const data = await getPictures(query, page);
+      const data = await getPictures(searchValue, page);
 
       if (data.hits.length === 0) {
           loadMore.style.display = "none";
@@ -93,7 +91,7 @@ async function loadMoreImg() {
   page++;
   loadMore.disabled = true;
   showLoader();
-  await loadData(query, page);
+  await loadData(searchValue, page);
   hideLoader();
 }
 

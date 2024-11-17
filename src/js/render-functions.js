@@ -1,8 +1,4 @@
 
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
-
-const lightbox = new SimpleLightbox('.gallery a');
 const gallery = document.querySelector('.gallery');
 
  export function renderPictures(pics) {
@@ -29,8 +25,8 @@ const gallery = document.querySelector('.gallery');
             </li>`
           })
        .join('');
-  gallery.innerHTML = markup;
-    
-  lightbox.refresh();
-}
+
+       gallery.insertAdjacentHTML("beforeend", markup);
+} 
+
 export default renderPictures;
